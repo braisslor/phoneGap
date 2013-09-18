@@ -25,6 +25,7 @@
 			roVar = roNum;
 		}
 		function checkConnection() {
+			document.getElementById('d').innerHTML='<center>Pushed';
             var networkState = navigator.connection.type;
 
             var states = {};
@@ -36,7 +37,7 @@
             states[Connection.CELL_4G]  = 'Cell 4G connection';
             states[Connection.CELL]     = 'Cell generic connection';
             states[Connection.NONE]     = 'No network connection';
-			document.getElementById('d').innerHTML='<center>'+states[networkState];
+			document.getElementById('n').innerHTML=states[networkState];
         }		
 	</script>
 </head>
@@ -52,4 +53,5 @@
 	<button onclick='butPressed(25)'>HIGH</button><br>
 	<button onclick='checkConnection()'>Debug</button>
 	<p id='d'>Text</p>
+	<p id ='n'>2</p>
 </body></html>
