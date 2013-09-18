@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html><head> 
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta name = 'viewport' content = 'user-scalable=no,width=device-width,minimum-scale=1.0,maximum-scale=0.6667'/>
+	<link href="css/jquery-ui.css" type ="text/css" rel="stylesheet" />
+	<script src='js/jquery.min.js'></script>
+	<script src='js/jquery-ui.min.js'></script>
+	<style> #slider { margin: 20px; } </style>
+	<script>
+		var roVar = 1; 
+		function changeLight(event, ui) { 
+			document.getElementById('t').innerHTML='<center>Sending';
+			setTimeout(function(){document.getElementById('t').innerHTML='<center>Control the Fan!'},450);
+			$.post('/', { li: ui.value } ); 
+		}
+		$(document).ready(function(){ $('#slider').slider({min: 1, max:19, change:changeLight}); });
+		function butPressed(butVal) {
+			document.getElementById('t').innerHTML='<center>Sending';
+			setTimeout(function(){document.getElementById('t').innerHTML='<center>Control the Fan!'},450);
+			$.post('/', { ro: roVar, li: butVal} );
+			$('#slider').slider({min: 1, max:19, change:changeLight});
+		}
+		function changeRoom(roNum) { 
+			roVar = roNum;
+		}
+	</script>
+</head>
+<body>
+	<h1 id='t'><center>Control the Fan!</h1>
+	<center>
+	<button onclick='butPressed(21)'>LIGHT</button>
+	<div id="slider" value=10></div>
+	<h1>Fan:</h1>
+	<button onclick='butPressed(22)'>OFF</button>
+	<button onclick='butPressed(23)'>LOW</button>
+	<button onclick='butPressed(24)'>MED</button>
+	<button onclick='butPressed(25)'>HIGH</button>
+</body></html>
