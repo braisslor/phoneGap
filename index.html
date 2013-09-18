@@ -36,8 +36,7 @@
             states[Connection.CELL_4G]  = 'Cell 4G connection';
             states[Connection.CELL]     = 'Cell generic connection';
             states[Connection.NONE]     = 'No network connection';
-
-            alert('Connection type: ' + states[networkState]);
+			document.getElementById('d').innerHTML='<center>'+states[networkState];
         }		
 	</script>
 </head>
@@ -50,7 +49,7 @@
 	<button onclick='butPressed(22)'>OFF</button>
 	<button onclick='butPressed(23)'>LOW</button>
 	<button onclick='butPressed(24)'>MED</button>
-	<button onclick='butPressed(25)'>HIGH</button>
-	<button onclick='checkConnection()'><Debug></button>
+	<button onclick='butPressed(25)'>HIGH</button><br>
+	<button onclick='checkConnection()'>Debug</button>
 	<p id='d'>Text</p>
 </body></html>
