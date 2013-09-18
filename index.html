@@ -8,16 +8,17 @@
 	<style> #slider { margin: 20px; } </style>
 	<script>
 		var roVar = 1; 
+		var ipText ='myarduino.hopto.org:245';
 		function changeLight(event, ui) { 
 			document.getElementById('t').innerHTML='<center>Sending';
 			setTimeout(function(){document.getElementById('t').innerHTML='<center>Control the Fan!'},450);
-			$.post('/', { li: ui.value } ); 
+			$.post(ipText, { li: ui.value } ); 
 		}
 		$(document).ready(function(){ $('#slider').slider({min: 1, max:19, change:changeLight}); });
 		function butPressed(butVal) {
 			document.getElementById('t').innerHTML='<center>Sending';
 			setTimeout(function(){document.getElementById('t').innerHTML='<center>Control the Fan!'},450);
-			$.post('/', { ro: roVar, li: butVal} );
+			$.post(ipText, { ro: roVar, li: butVal} );
 			$('#slider').slider({min: 1, max:19, change:changeLight});
 		}
 		function changeRoom(roNum) { 
