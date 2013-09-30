@@ -9,8 +9,8 @@
 	<style> #slider { margin: 20px; } </style>
 	<script>
 		var roVar = 1; 
-		var WANIP='http://107.223.141.134:245/';
-		var LANIP='http://192.168.10.201/';
+		var WANIP='107.223.141.134:245';
+		var LANIP='192.168.10.201';
 		var ipText="";
 		function changeLight(event, ui) { 
 			document.getElementById('t').innerHTML='<center>Sending';
@@ -27,10 +27,10 @@
 		function updateIPText() {
 			document.getElementById('n').innerHTML=codehelper_ip.IP;
 			if (codehelper_ip.IP == LANIP) {
-				ipTEXT = LANIP;
+				ipTEXT = 'http://' + LANIP + '/';
 				document.getElementById('d').innerHTML='Using local IP';
 			} else {
-				ipTEXT = WANIP;
+				ipTEXT = 'http://' + WANIP + ':245/';
 				document.getElementById('d').innerHTML='Using Long Distance IP';
 			}
 		}		
