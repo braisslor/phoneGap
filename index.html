@@ -25,11 +25,12 @@
 				}
 		);
 		function updateIPText() {
+			document.getElementById('n').innerHTML=codehelper_ip.IP;
 			if (codehelper_ip.IP == LANIP) {
 				ipTEXT = LANIP;
 				document.getElementById('d').innerHTML='Using local IP';
 			} else {
-				ipTEXT = LANIP;
+				ipTEXT = WANIP;
 				document.getElementById('d').innerHTML='Using Long Distance IP';
 			}
 		}		
@@ -71,5 +72,5 @@
 	<button onclick='butPressed(25)'>HIGH</button><br>
 	<button onclick='checkConnection()'>Debug</button>
 	<p id='d'></p>
-	<p id ='n'>2</p>
+	<p id ='n'></p>
 </body></html>
