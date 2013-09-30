@@ -5,16 +5,34 @@
 	<link href="css/jquery-ui.css" type ="text/css" rel="stylesheet" />
 	<script src='js/jquery.min.js'></script>
 	<script src='js/jquery-ui.min.js'></script>
+	<script language="Javascript" src="http://www.codehelper.io/api/ips/?js"></script>
 	<style> #slider { margin: 20px; } </style>
 	<script>
 		var roVar = 1; 
-		var ipText ='http://myarduino.hopto.org:245/';
+		var WANIP='http://107.223.141.134:245/';
+		var LANIP='http://192.168.10.201/';
+		var ipText="";
 		function changeLight(event, ui) { 
 			document.getElementById('t').innerHTML='<center>Sending';
 			setTimeout(function(){document.getElementById('t').innerHTML='<center>Control the Fan!'},450);
+			updateIPText();
 			$.post(ipText, { li: ui.value } ); 
 		}
-		$(document).ready(function(){ $('#slider').slider({min: 1, max:19, change:changeLight}); });
+		$(document).ready(
+			function(){ 
+				updateIPText(); 
+				$('#slider').slider({min: 1, max:19, change:changeLight}); 
+				}
+		);
+		function updateIPText() {
+			if (codehelper_ip.IP == LANIP) {
+				ipTEXT = LANIP;
+				document.getElementById('d').innerHTML='Using local IP';
+			} else {
+				ipTEXT = LANIP;
+				document.getElementById('d').innerHTML='Using Long Distance IP';
+			}
+		}		
 		function butPressed(butVal) {
 			document.getElementById('t').innerHTML='<center>Sending';
 			setTimeout(function(){document.getElementById('t').innerHTML='<center>Control the Fan!'},450);
@@ -52,6 +70,6 @@
 	<button onclick='butPressed(24)'>MED</button>
 	<button onclick='butPressed(25)'>HIGH</button><br>
 	<button onclick='checkConnection()'>Debug</button>
-	<p id='d'>Text</p>
+	<p id='d'></p>
 	<p id ='n'>2</p>
 </body></html>
