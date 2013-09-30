@@ -36,6 +36,7 @@
 		}		
 		function butPressed(butVal) {
 			document.getElementById('t').innerHTML='<center>Sending';
+			updateIPText();
 			setTimeout(function(){document.getElementById('t').innerHTML='<center>Control the Fan!'},450);
 			$.post(ipText, { ro: roVar, li: butVal} );
 			$('#slider').slider({min: 1, max:19, change:changeLight});
