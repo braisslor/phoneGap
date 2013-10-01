@@ -5,65 +5,110 @@
 	<link href="css/jquery-ui.css" type ="text/css" rel="stylesheet" />
 	<script src='js/jquery.min.js'></script>
 	<script src='js/jquery-ui.min.js'></script>
-	<script language="Javascript" src="http://www.codehelper.io/api/ips/?js"></script>
+	<script id='ip_id' type='text/javascript' src="http://www.codehelper.io/api/ips/?js"></script>
 	<style> #slider { margin: 20px; } </style>
 	<script>
-		var roVar = 1; 
+		var roVar = 2; 
 		var WANIP='107.223.141.134';
 		var LANIP='192.168.10.201';
+		var lastIp = "";
 		var ipText="";
 		function changeLight(event, ui) { 
 			document.getElementById('t').innerHTML='<center>Sending';
 			setTimeout(function(){document.getElementById('t').innerHTML='<center>Control the Fan!'},450);
-			updateIPText();
-			$.post(ipText, { li: ui.value } ); 
+			$.post(ipText, { ro: roVar, li: ui.value } );
+			updateIPText(); 
 		}
 		$(document).ready(
 			function(){ 
-				updateIPText(); 
-				$('#slider').slider({min: 1, max:19, change:changeLight}); 
+				 
+				roVar = 2; //This is for living room at my house currently. Not permanent
+				$('#slider').slider({min: 1, max:19, value:10, change:changeLight}); 
+				updateIPText();
 				}
 		);
-		function updateIPText() {
-			document.getElementById('n').innerHTML=codehelper_ip.IP;
-			if (codehelper_ip.IP == LANIP) {
-				ipTEXT = 'http://' + LANIP + '/';
-				document.getElementById('d').innerHTML='Using local IP';
+
+		function updateIPText(butVal) {
+			$('#ip_id').remove();
+			var script = document.createElement('script');
+			script.id = 'ip_id';
+			script.src = 'http://www.codehelper.io/api/ips/?js';
+			script.type = 'text/javascript';
+			document.getElementsByTagName('head')[0].appendChild(script);
+			//document.getElementById('n').innerHTML=codehelper_ip.IP;
+			//If my current IP and the WANIP are the same then i'm on the same network as the uController
+			if (codehelper_ip.IP == WANIP) {
+				lastIp = codehelper_ip.IP;
+				ipText = 'http://' + LANIP + '/';
+				document.getElementById('d').innerHTML="On Home WIFI";
 			} else {
-				ipTEXT = 'http://' + WANIP + ':245/';
-				document.getElementById('d').innerHTML='Using Long Distance IP';
+				lastIp = codehelper_ip.IP;
+				ipText = 'http://' + WANIP + ':245/';
+				document.getElementById('d').innerHTML="Not on Home WIFI";
 			}
-		}		
+				document.getElementById('n').innerHTML="Waiting";
+			setTimeout(
+				function () { 
+					if (lastIp != codehelper_ip.IP) { 
+						if (codehelper_ip.IP == WANIP) {
+						lastIp = codehelper_ip.IP;
+						ipText = 'http://' + LANIP + '/';
+						document.getElementById('d').innerHTML="On Home WIFI";
+					} else {
+					lastIp = codehelper_ip.IP;
+					ipText = 'http://' + WANIP + ':245/';
+					document.getElementById('d').innerHTML="Not on Home WIFI";
+					$.post(ipText, { ro: roVar, li: butVal} );
+					}
+					document.getElementById('n').innerHTML="Resending";
+					
+					}
+					}, 750);
+			
+		}	
+		
+			
 		function butPressed(butVal) {
 			document.getElementById('t').innerHTML='<center>Sending';
-			updateIPText();
+			updateIPText(butVal);
 			setTimeout(function(){document.getElementById('t').innerHTML='<center>Control the Fan!'},450);
 			$.post(ipText, { ro: roVar, li: butVal} );
-			$('#slider').slider({min: 1, max:19, change:changeLight});
 		}
 		function changeRoom(roNum) { 
 			roVar = roNum;
-		}
-		function checkConnection() {
-			document.getElementById('d').innerHTML='<center>Pushed';
-            var networkState = navigator.connection.type;
-
-            var states = {};
-            states[Connection.UNKNOWN]  = 'Unknown connection';
-            states[Connection.ETHERNET] = 'Ethernet connection';
-            states[Connection.WIFI]     = 'WiFi connection';
-            states[Connection.CELL_2G]  = 'Cell 2G connection';
-            states[Connection.CELL_3G]  = 'Cell 3G connection';
-            states[Connection.CELL_4G]  = 'Cell 4G connection';
-            states[Connection.CELL]     = 'Cell generic connection';
-            states[Connection.NONE]     = 'No network connection';
-			document.getElementById('n').innerHTML=states[networkState];
-        }		
+		}		
 	</script>
 </head>
 <body>
 	<h1 id='t'><center>Control the Fan!</h1>
 	<center>
+	<form>
+      <fieldset>
+       <legend>Room</legend>
+       <p>           
+          <input type = "radio"
+                 name = "room"
+                 id = "roomBed"
+                 onchange = changeRoom(1);
+                  />
+          <label>Bed Room</label>
+          
+          <input type = "radio"
+                 name = "room"
+                 id = "roomLiving"
+                 checked = "checked"
+                 onchange = changeRoom(2);
+                 />
+          <label>Living Room</label>
+ 
+          <input type = "radio"
+                 name = "room"
+                 id = "roomGuest"
+                 onchange = changeRoom(3); />
+          <label>Guest Room</label>
+        </p>       
+      </fieldset>     
+    </form>
 	<button onclick='butPressed(21)'>LIGHT</button>
 	<div id="slider" value=10></div>
 	<h1>Fan:</h1>
@@ -71,7 +116,6 @@
 	<button onclick='butPressed(23)'>LOW</button>
 	<button onclick='butPressed(24)'>MED</button>
 	<button onclick='butPressed(25)'>HIGH</button><br>
-	<button onclick='checkConnection()'>Debug</button>
 	<p id='d'></p>
 	<p id ='n'></p>
 </body></html>
