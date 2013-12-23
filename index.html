@@ -18,7 +18,8 @@
 		}
 	</style>
 	<script>
-		var roVar = 2; 
+		var roVar = 2;
+		var outVar = 99;
 		var WANIP='107.223.141.134';
 		var LANIP='192.168.10.201';
 		var lastIp = "";
@@ -86,7 +87,16 @@
 		}
 		function changeRoom(roNum) { 
 			roVar = roNum;
-		}		
+		}	
+		function changeOutlet(outNum) { 
+			outVar = outNum;
+		}
+		function sendOutlet(incVal) {
+			document.getElementById('title').innerHTML='<center>Sending';
+			updateIPText(incVal);
+			setTimeout(function(){document.getElementById('title').innerHTML='<center>Control the Fan!'},450);
+			$.post(ipText + 'outlet/' ,  ou: outVar );
+		}
 	</script>
 </head>
 <body>
@@ -97,7 +107,7 @@
 		<center>
 		<form>
 		<fieldset>
-		<legend>Room</legend>
+		<legend><center>Room</center></legend>
 		<p>           
           <input type = "radio"
                  name = "room"
@@ -125,5 +135,37 @@
 		<button onclick='butPressed(25)'>HIGH</button><br>
 		<p id='d'></p>
 		<p id ='n'></p></center>
+	</div>
+	<br><br>
+	<div id="content">
+		<center>
+		<form>
+		<fieldset>
+		<legend><center>Outlets</center></legend>
+		<p>           
+          <input type = "radio"
+                 name = "outlet"
+                 id = "outTrees"
+                 onchange = changeOutlet(1);
+                  />
+          <label>Trees</label>
+          
+          <input type = "radio"
+                 name = "outlet"
+                 id = "fanOutlet"
+                 checked = "checked"
+                 onchange = changeOutlet(2);
+                 />
+          <label>Fan</label>
+          <input type = "radio"
+                 name = "outlet"
+                 id = "houseOutlet"
+                 onchange = changeOutlet(4);
+                 />
+          <label>House Lights</label>
+        </p>       
+		</fieldset>     
+		</form>
+		<button onclick='sendOutlet()'>Send Outlet</button><br>
 	</div>
 </body></html>
