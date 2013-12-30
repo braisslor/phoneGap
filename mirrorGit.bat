@@ -1,1 +1,1 @@
-robocopy "c:\users\brownkr\documents\My dropbox\public\phonegap" "C:\Users\brownkr\Documents\GitHub\phoneGap" /s
+robocopy "c:\users\brownkr\documents\My dropbox\public\phonegap" "C:\Users\brownkr\Documents\GitHub\phoneGap" /s /xd "C:\Users\brownkr\Documents\My Dropbox\Public\phoneGap\.git" /xf *.git* 

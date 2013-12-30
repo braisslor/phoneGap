@@ -84,7 +84,7 @@
 			document.getElementById('title').innerHTML='<center>Sending';
 			updateIPText(incVal);
 			setTimeout(function(){document.getElementById('title').innerHTML='<center>Control the Fan!'},450);
-			$.post(ipText + 'outlet/' ,  {ou: outVar} );
+			$.post(ipText + 'outlet' ,  {ou: outVar} ); 
 		}
 			
 		function butPressed(butVal) {
