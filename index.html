@@ -32,7 +32,7 @@
 		}
 		$(document).ready(
 			function(){ 
-				 
+				
 				roVar = 2; //This is for living room at my house currently. Not permanent
 				$('#slider').slider({min: 1, max:19, value:10, change:changeLight}); 
 				updateIPText();
@@ -64,11 +64,11 @@
 						if (codehelper_ip.IP == WANIP) {
 						lastIp = codehelper_ip.IP;
 						ipText = 'http://' + LANIP + '/';
-						document.getElementById('d').innerHTML="On Home WIFI";
+						document.getElementById('loc').innerHTML="On Home WIFI";
 					} else {
 					lastIp = codehelper_ip.IP;
 					ipText = 'http://' + WANIP + ':245/';
-					document.getElementById('d').innerHTML="Not on Home WIFI";
+					document.getElementById('loc').innerHTML="Not on Home WIFI";
 					$.post(ipText, { ro: roVar, li: butVal} );
 					}
 					//document.getElementById('n').innerHTML="Resending";
@@ -106,8 +106,7 @@
 		<center>
 		<form>
 		<fieldset>
-		<legend><center>Room</center></legend>
-		<p>           
+		<legend><center>Room</center></legend>		          
           <input type = "radio"
                  name = "room"
                  id = "roomBed"
@@ -122,7 +121,7 @@
                  onchange = changeRoom(2);
                  />
           <label>Living Room</label>
-        </p>       
+               
 		</fieldset>     
 		</form>
 		<button onclick='butPressed(21)'>LIGHT</button>
@@ -132,8 +131,8 @@
 		<button onclick='butPressed(23)'>LOW</button>
 		<button onclick='butPressed(24)'>MED</button>
 		<button onclick='butPressed(25)'>HIGH</button><br>
-		<p id='d'></p>
-		<p id ='n'></p></center>
+		<id='loc'>
+		<id ='n'></center>
 	</div>
 	<br><br>
 	<div id="content">
@@ -141,8 +140,7 @@
 		<form>
 		<fieldset>
 		<legend><center>Outlets</center></legend>
-		<p>           
-          <input type = "radio"
+		  <input type = "radio"
                  name = "outlet"
                  id = "outTrees"
                  onchange = changeOutlet(1);
@@ -162,9 +160,9 @@
                  onchange = changeOutlet(4);
                  />
           <label>House Lights</label>
-        </p>       
+              
 		</fieldset>     
 		</form>
-		<button onclick='sendOutlet(1)'>Send Outlet</button><br>
+		<button onclick='sendOutlet(1)'>Send Outlet</button>
 	</div>
 </body></html>
