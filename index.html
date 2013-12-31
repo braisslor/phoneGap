@@ -84,7 +84,14 @@
 			document.getElementById('title').innerHTML='<center>Sending';
 			updateIPText(incVal);
 			setTimeout(function(){document.getElementById('title').innerHTML='<center>Control the Fan!'},450);
-			$.post(ipText + 'outlet' ,  {ou: outVar} ); 
+			if(outVar <5) {
+				outVar = outVar + incVal;	
+				$.post(ipText + 'outlet' ,  {ou: outVar} ); 
+				outVar = outVar - incVal;
+			} else {
+				$.post(ipText + 'outlet' ,  {ou: outVar} ); 
+			}
+			
 		}
 			
 		function butPressed(butVal) {
@@ -141,7 +148,7 @@
 		  <input type = "radio"
                  name = "outlet"
                  id = "outTrees"
-                 onchange = changeOutlet(1);
+                 onchange = changeOutlet(0);
                   />
           <label>Trees</label>
           
@@ -161,6 +168,6 @@
               
 		</fieldset>     
 		</form>
-		<button onclick='sendOutlet(1)'>Send Outlet</button>
+		<pre><button onclick='sendOutlet(1)'>Turn On</button>          <button onclick='sendOutlet(0)'>Turn Off</button></pre>
 	</div>
 </body></html>
