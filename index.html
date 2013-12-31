@@ -51,11 +51,11 @@
 			if (codehelper_ip.IP == WANIP) {
 				lastIp = codehelper_ip.IP;
 				ipText = 'http://' + LANIP + '/';
-				document.getElementById('d').innerHTML="On Home WIFI";
+				document.getElementById('loc').innerHTML="On Home WIFI";
 			} else {
 				lastIp = codehelper_ip.IP;
 				ipText = 'http://' + WANIP + ':245/';
-				document.getElementById('d').innerHTML="Not on Home WIFI";
+				document.getElementById('loc').innerHTML="Not on Home WIFI";
 			}
 				//document.getElementById('n').innerHTML="Waiting";
 			setTimeout(
@@ -130,11 +130,9 @@
 		<button onclick='butPressed(22)'>OFF</button>
 		<button onclick='butPressed(23)'>LOW</button>
 		<button onclick='butPressed(24)'>MED</button>
-		<button onclick='butPressed(25)'>HIGH</button><br>
-		<id='loc'>
-		<id ='n'></center>
+		<button onclick='butPressed(25)'>HIGH</button><br><br>
+		<text id='loc'> </text></center>
 	</div>
-	<br><br>
 	<div id="content">
 		<center>
 		<form>
