@@ -83,7 +83,6 @@
 		function updateIPText(butVal) {
 			$.getJSON( "http://smart-ip.net/geoip-json?callback=?",
 			function(data){
-				alert( data.host);
 				newIp = data.host;
 				}
 			);
