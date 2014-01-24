@@ -8,7 +8,7 @@
 	<link rel="apple-touch-icon" href="apple-touch-icon-precomposed.png"/>
 	<script src='js/jquery.min.js'></script>
 	<script src='js/jquery-ui.min.js'></script>
-	<script id='ip_id' type='text/javascript' src="http://www.codehelper.io/api/ips/?js"></script>
+	
 	<style> 
 		#slider { 
 			margin: 20px;
@@ -18,10 +18,12 @@
 		}
 	</style>
 	<script>
+		//<script id='ip_id' type='text/javascript' src="http://www.codehelper.io/api/ips/?js">
 		var roVar = 2;
 		var outVar = 2;
 		var WANIP='107.223.141.134';
 		var LANIP='192.168.10.201';
+		var newIp = "";
 		var lastIp = "";
 		var ipText="";
 		function changeLight(event, ui) { 
@@ -38,7 +40,7 @@
 				updateIPText();
 				}
 		);
-
+		/*
 		function updateIPText(butVal) {
 			$('#ip_id').remove();
 			var script = document.createElement('script');
@@ -46,7 +48,7 @@
 			script.src = 'http://www.codehelper.io/api/ips/?js';
 			script.type = 'text/javascript';
 			document.getElementsByTagName('head')[0].appendChild(script);
-			//document.getElementById('n').innerHTML=codehelper_ip.IP;
+			//document.getElementById('n').innerHTML=Customer Address.IP;
 			//If my current IP and the WANIP are the same then i'm on the same network as the uController
 			if (codehelper_ip.IP == WANIP) {
 				lastIp = codehelper_ip.IP;
@@ -76,7 +78,45 @@
 					}
 					}, 750);
 			
-		}	
+		}
+		*/
+		function updateIPText(butVal) {
+			$.getJSON( "http://smart-ip.net/geoip-json?callback=?",
+			function(data){
+				alert( data.host);
+				newIp = data.host;
+				}
+			);
+			//If my current IP and the WANIP are the same then i'm on the same network as the uController
+			if (newIp == WANIP) {
+				lastIp = newIp;
+				ipText = 'http://' + LANIP + '/';
+				document.getElementById('loc').innerHTML="On Home WIFI";
+			} else {
+				lastIp = newIp;
+				ipText = 'http://' + WANIP + ':245/';
+				document.getElementById('loc').innerHTML="Not on Home WIFI";
+			}
+				//document.getElementById('n').innerHTML="Waiting";
+			setTimeout(
+				function () { 
+					if (lastIp != newIp) { 
+						if (newIp == WANIP) {
+						lastIp = newIp;
+						ipText = 'http://' + LANIP + '/';
+						document.getElementById('loc').innerHTML="On Home WIFI";
+					} else {
+					lastIp = newIp;
+					ipText = 'http://' + WANIP + ':245/';
+					document.getElementById('loc').innerHTML="Not on Home WIFI";
+					$.post(ipText, { ro: roVar, li: butVal} );
+					}
+					//document.getElementById('n').innerHTML="Resending";
+					
+					}
+					}, 750);
+			
+		}
 		function changeOutlet(outNum) { 
 			outVar = outNum;
 		}
