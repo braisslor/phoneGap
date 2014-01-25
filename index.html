@@ -3,6 +3,7 @@
 	<meta content="yes" name="apple-mobile-web-app-capable" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 	<meta name="viewport" content="initial-scale=1.0">
+	
 	<link href="css/jquery-ui.css" type ="text/css" rel="stylesheet" />
 	<link href="css/prettyPhone.css" type ="text/css" rel="stylesheet" />
 	<link rel="apple-touch-icon" href="apple-touch-icon-precomposed.png"/>
@@ -21,7 +22,7 @@
 		//<script id='ip_id' type='text/javascript' src="http://www.codehelper.io/api/ips/?js">
 		var roVar = 2;
 		var outVar = 2;
-		var WANIP='107.223.141.134';
+		var WANIP='';
 		var LANIP='192.168.10.201';
 		var newIp = "";
 		var lastIp = "";
@@ -40,50 +41,15 @@
 				updateIPText();
 				}
 		);
-		/*
-		function updateIPText(butVal) {
-			$('#ip_id').remove();
-			var script = document.createElement('script');
-			script.id = 'ip_id';
-			script.src = 'http://www.codehelper.io/api/ips/?js';
-			script.type = 'text/javascript';
-			document.getElementsByTagName('head')[0].appendChild(script);
-			//document.getElementById('n').innerHTML=Customer Address.IP;
-			//If my current IP and the WANIP are the same then i'm on the same network as the uController
-			if (codehelper_ip.IP == WANIP) {
-				lastIp = codehelper_ip.IP;
-				ipText = 'http://' + LANIP + '/';
-				document.getElementById('loc').innerHTML="On Home WIFI";
-			} else {
-				lastIp = codehelper_ip.IP;
-				ipText = 'http://' + WANIP + ':245/';
-				document.getElementById('loc').innerHTML="Not on Home WIFI";
-			}
-				//document.getElementById('n').innerHTML="Waiting";
-			setTimeout(
-				function () { 
-					if (lastIp != codehelper_ip.IP) { 
-						if (codehelper_ip.IP == WANIP) {
-						lastIp = codehelper_ip.IP;
-						ipText = 'http://' + LANIP + '/';
-						document.getElementById('loc').innerHTML="On Home WIFI";
-					} else {
-					lastIp = codehelper_ip.IP;
-					ipText = 'http://' + WANIP + ':245/';
-					document.getElementById('loc').innerHTML="Not on Home WIFI";
-					$.post(ipText, { ro: roVar, li: butVal} );
-					}
-					//document.getElementById('n').innerHTML="Resending";
-					
-					}
-					}, 750);
-			
-		}
-		*/
 		function updateIPText(butVal) {
 			$.getJSON( "http://smart-ip.net/geoip-json?callback=?",
 			function(data){
 				newIp = data.host;
+				}
+			);
+			$.getJSON( "http://smart-ip.net/geoip-json/myarduino.hopto.org?callback=?",
+			function(data){
+				WANIP = data.host;
 				}
 			);
 			//If my current IP and the WANIP are the same then i'm on the same network as the uController
