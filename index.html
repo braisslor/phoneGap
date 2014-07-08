@@ -23,7 +23,7 @@
 		var roVar = 2;
 		var outVar = 2;
 		var WANIP='';
-		var LANIP='192.168.10.201';
+		var LANIP='192.168.1.201';
 		var newIp = "";
 		var lastIp = "";
 		var ipText="";
@@ -42,12 +42,12 @@
 				}
 		);
 		function updateIPText(butVal) {
-			$.getJSON( "http://smart-ip.net/geoip-json?callback=?",
+			$.getJSON( "http://freegeoip.net/json/",
 			function(data){
-				newIp = data.host;
+				newIp = data.ip;
 				}
 			);
-			$.getJSON( "http://smart-ip.net/geoip-json/myarduino.hopto.org?callback=?",
+			$.getJSON( "http://freegeoip.net/json/myarduino.hopto.org",
 			function(data){
 				WANIP = data.host;
 				}
